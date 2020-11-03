@@ -1,0 +1,114 @@
+mysql> create table Employee(sno int,Name varchar(20),empId varchar(20));
+Query OK, 0 rows affected (0.84 sec)
+mysql> insert into Employee(sno,Name,empId)values(1,'jhansi','100');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into Employee(sno,Name,empId)values(2,'suji','101');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into Employee(sno,Name,empId)values(3,'navya','102');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into Employee(sno,Name,empId)values(4,'madhavi','103');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into Employee(sno,Name,empId)values(5,'ravi','101');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into Employee(sno,Name,empId)values(6,'navi','102');
+Query OK, 1 row affected (0.08 sec)
+mysql> select * from Emp;
++------+--------+-------+
+| sno  | Name   | empId |
++------+--------+-------+
+|    1 | jhansi | 100   |
+|    2 | suji   | 101   |
+|    3 | navya  | 102   |
+|    4 | madhavi| 103   |
+|    5 | ravi   | 101   |
+|    6 | navi   | 102   |
++------+--------+-------+
+6 rows in set (0.00 sec)
+
+mysql> create table Dep(DepId varchar(200),Dep_name varchar(200));
+Query OK, 0 rows affected (0.46 sec)
+
+mysql> insert into Dep(DepId,Dep_name)values('1','TR');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into Dep(DepId,Dep_name)values('2','HR');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select * from Dep;
++-------+----------+
+| DepId | Dep_name |
++-------+----------+
+| 1     | TR       |
+| 2     | HR       |
++-------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select sno,Name,empID,DepId,Dep_name
+from Emp 
+join Dep on Employee.empId=Dep.DepId;
++------+--------+-------+----------+
+| sno   | Name   | DepId | Dep_name |
++------+--------+-------+----------+
+|    2 | suji   | 1     | TR       |
+|    3 | navya  | 2     | HR       |
+|    5 | ravi   | 1     | TR       |
+|    6 | navi   | 2     | HR       |
++------+--------+-------+----------+
+4 rows in set (0.05 sec)
+mysql> select sno,Name,Dep.DepId,Dep_name from Employee
+left join 
+Dep on Employee.emppId=Dep.DepId;
++------+--------+-------+----------+
+| sno   | Name   | DepId | Dep_name |
++------+--------+-------+----------+
+|    2 | suji   |  1    | TR       |
+|    3 | navya  |  2    | HR       |
+|    5 | ravi   |  1    | TR       |
+|    6 | navi   |  2    | HR       |
+|    1 | jhansi | NULL  | NULL     |
+|    4 | madhavi| NULL  | NULL     |
++------+--------+-------+----------+
+6 rows in set (0.01 sec)
+
+mysql> select Id,Name,Dep.DepId,Dep_name from Employee 
+right join 
+Dep on Emp.DepId=Dep.DepId;
++------+--------+-------+----------+
+| sno  | Name   | DepId | Dep_name |
++------+--------+-------+----------+
+|    2 | suji   | 1     | TR       |
+|    3 | navya  | 2     | HR       |
+|    5 | ravi   | 1     | TR       |
+|    6 | navi   | 2     | HR       |
++------+--------+-------+----------+
+4 rows in set (0.00 sec)
+mysql> select sno,Name,Dep.DepId,Dep_name from Employee 
+inner join 
+Dep on Employee.empId=Dep.DepId;
++------+--------+-------+----------+
+| Id   | Name   | DepId | Dep_name |
++------+--------+-------+----------+
+|    2 | suji   | 1     | TR       |
+|    3 | navya  | 2     | HR       |
+|    5 | ravi   | 1     | TR       |
+|    6 | navi   | 2     | HR       |
++------+--------+-------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select emp,Name,Dep.DepId,Dep_name from Employee 
+cross join 
+Dep on Employee.empId=Dep.DepId;
++------+--------+-------+----------+
+| Id   | Name   | DepId | Dep_name |
++------+--------+-------+----------+
+|    1 | suji   | 1     | TR       |
+|    2 | navya  | 2     | HR       |
+|    4 | ravi   | 1     | TR       |
+|    6 | navi   | 2     | HR       |
++------+--------+-------+----------+
+4 rows in set (0.00 sec)
